@@ -1,10 +1,10 @@
-const { Users } = require('../models');
+const { User } = require('../models');
 const jwtToken = require('../token/jwtGenerate');
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;
     try {
-        const found = await Users.findOne({ where: { email, password } });
+        const found = await User.findOne({ where: { email, password } });
         if (!found) return res.status(400).json({ message: 'Invalid fields' });
 
         const token = jwtToken({ email, password });
@@ -19,10 +19,10 @@ const create = async (req, res, next) => {
     const message = { message: 'User already registered' };
 
     try {
-        const findEmail = await Users.findOne({ where: { email } });
+        const findEmail = await User.findOne({ where: { email } });
         if (findEmail) return res.status(409).json(message);
 
-        const created = await Users.create({ displayName, email, password, image });
+        const created = await User.create({ displayName, email, password, image });
         const token = jwtToken({ id: created.id, displayName });
 
         return res.status(201).json(token);
@@ -33,7 +33,7 @@ const create = async (req, res, next) => {
 
 const getAll = async (__req, res, next) => {
     try {
-        const result = await Users.findAll({});
+        const result = await User.findAll({});
         return res.status(200).json(result);
     } catch (e) {
         next(e);
@@ -43,7 +43,7 @@ const getAll = async (__req, res, next) => {
 const getById = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const userId = await Users.findOne({ where: { id } });
+        const userId = await User.findOne({ where: { id } });
         if (userId) return res.status(200).json(userId);        
         
         return res.status(404).json({ message: 'User does not exist' });
@@ -55,7 +55,7 @@ const getById = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
     const { id } = req.params;
     try {
-       await Users.destroy({ where: { id } });
+       await User.destroy({ where: { id } });
         
         return res.status(204).end();
     } catch (e) {
