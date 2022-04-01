@@ -53,9 +53,9 @@ const getById = async (req, res, next) => {
 };
 
 const deleteUser = async (req, res, next) => {
-    const { id } = req.params;
+    const { authorization } = req.headers;
     try {
-       await User.destroy({ where: { id } });
+       await User.destroy({ where: { authorization } });
         
         return res.status(204).end();
     } catch (e) {

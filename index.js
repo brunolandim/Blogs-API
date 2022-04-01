@@ -23,7 +23,7 @@ app.get('/', (request, response) => {
 app.get('/user/:id', verifyToken, User.getById);
 app.get('/user', verifyToken, User.getAll);
 app.post('/user', validationEmail, validationPassword, validationDisplayName, User.create);
-app.delete('/user/:id', verifyToken, User.deleteUser);
+app.delete('/user/me', verifyToken, User.deleteUser);
 
 app.post('/login', validationEmail, validationPassword, User.login);
 app.post('/categories', validationNameCategory, verifyToken, Category.create);
