@@ -27,6 +27,9 @@ app.post('/user', validationEmail, validationPassword, validationDisplayName, Us
 app.delete('/user/:id', verifyToken, User.deleteUser);
 
 app.post('/login', validationEmail, validationPassword, User.login);
+<<<<<<< HEAD
 
 app.post('/categories', validationNameCategory, verifyToken, Category.create);
 app.get('/categories', verifyToken, Category.getAll);
+=======
+>>>>>>> 611f80661942322ddf3f3f57139d156a0db6e534
