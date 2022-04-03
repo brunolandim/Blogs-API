@@ -47,3 +47,4 @@ app.put('/post/:id',
   validationContent,
   validationTitle,
   verifyToken, Post.editPost);
+app.delete('/post/:id', verifyToken, Post.exclude);

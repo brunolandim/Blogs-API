@@ -76,9 +76,25 @@ const editPost = async (req, res, next) => {
   }
 };
 
+const exclude = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const authorized = await BlogPost.findByPk(id);
+    if (!authorized) return res.status(404).json({ message: 'Post does not exist' });
+    if (authorized.userId !== req.dataToken.id) {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    }
+    await authorized.destroy({ where: { id } });
+    return res.status(204).end();
+  } catch (e) {
+    next(e.message);
+  }
+};
+
 module.exports = {
     create,
     getAll,
     getById,
     editPost,
+    exclude,
 };
