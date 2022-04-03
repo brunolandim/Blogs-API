@@ -1,9 +1,9 @@
-const { Categories } = require('../models');
+const { Category } = require('../models');
 
 const create = async (req, res, next) => {
     const { name } = req.body;
     try {
-        const created = await Categories.create({ name });
+        const created = await Category.create({ name });
 
         return res.status(201).json(created);
     } catch (e) {
@@ -13,7 +13,7 @@ const create = async (req, res, next) => {
 
 const getAll = async (__req, res, next) => {
     try {
-        const categories = await Categories.findAll();
+        const categories = await Category.findAll();
         
         res.status(200).json(categories);
     } catch (e) {

@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       title: {
         allowNull: false,
@@ -18,27 +18,27 @@ module.exports = {
         type: Sequelize.STRING,
       },
       userId: {
-        allowNull:false,
+        allowNull: false,
         type: Sequelize.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        references:{
+        references: {
           model: 'Users',
           key: 'id',
         },
-        published: {
-          allowNull:false,
-          type: Sequelize.DATE,
-        },
-        updated: {
-          allowNull:false,
-          type: Sequelize.DATE,
-        }
+      },
+      published: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updated: {
+        allowNull: true,
+        type: Sequelize.DATE,
       },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('BlogPosts')
+    await queryInterface.dropTable('BlogPosts');
   }
 };

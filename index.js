@@ -6,9 +6,14 @@ const { validationDisplayName,
         validationPassword } = require('./middleware/ValidationUser');
 const { verifyToken } = require('./middleware/verifyToken');
 const { validationNameCategory } = require('./middleware/ValidationCategoy'); 
+const {
+    validationCategotyId,
+    validationTitle,
+    validationContent } = require('./middleware/ValidationBlogPost');
 
 const Category = require('./controller/category');
 const User = require('./controller/user');
+const Post = require('./controller/blogPost');
 
 const app = express();
 app.use(bodyParser.json());
@@ -28,3 +33,9 @@ app.delete('/user/me', verifyToken, User.deleteUser);
 app.post('/login', validationEmail, validationPassword, User.login);
 app.post('/categories', validationNameCategory, verifyToken, Category.create);
 app.get('/categories', verifyToken, Category.getAll);
+
+app.post('/post', 
+  validationCategotyId, 
+  validationTitle, 
+  validationContent,
+  verifyToken, Post.create);

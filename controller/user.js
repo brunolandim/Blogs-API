@@ -7,7 +7,7 @@ const login = async (req, res, next) => {
         const found = await User.findOne({ where: { email, password } });
         if (!found) return res.status(400).json({ message: 'Invalid fields' });
 
-        const token = jwtToken({ email, password });
+        const token = jwtToken({ id: found.id, password });
         return res.status(200).json({ token });
     } catch (e) {
         next(e);
