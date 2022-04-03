@@ -26,7 +26,26 @@ const getAll = async (__req, res, next) => {
     const result = await BlogPost.findAll({
       include: [
         { model: User, as: 'user', attribuites: { exclude: 'password' } },
-        { model: Category, as: 'categories', attribuites: { exclude: 'password' } },
+        { model: Category, as: 'categories' },
+      ],
+    });
+    return res.status(200).json(result);
+  } catch (e) {
+    next(e.message);
+  }
+};
+const getById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const idExist = await BlogPost.findByPk(id);
+    if (!idExist || idExist === null) { 
+      return res.status(404).json({ message: 'Post does not exist' }); 
+    }
+
+    const result = await BlogPost.findByPk(id, {
+      include: [
+        { model: User, as: 'user', attribuites: { exclude: 'password' } },
+        { model: Category, as: 'categories' },
       ],
     });
     return res.status(200).json(result);
@@ -38,4 +57,5 @@ const getAll = async (__req, res, next) => {
 module.exports = {
     create,
     getAll,
+    getById,
 };

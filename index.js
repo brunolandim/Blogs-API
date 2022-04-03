@@ -40,3 +40,4 @@ app.post('/post',
   validationContent,
   verifyToken, Post.create);
 app.get('/post', verifyToken, Post.getAll);
+app.get('/post/:id', verifyToken, Post.getById);
