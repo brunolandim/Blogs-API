@@ -53,9 +53,10 @@ const getById = async (req, res, next) => {
 };
 
 const deleteUser = async (req, res, next) => {
-    const { authorization } = req.headers;
+    const { id } = req.dataToken;
     try {
-       await User.destroy({ where: { authorization } });
+        const findUser = await User.findByPk(id);
+        await findUser.destroy();
         
         return res.status(204).end();
     } catch (e) {
