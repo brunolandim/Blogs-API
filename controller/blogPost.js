@@ -54,8 +54,31 @@ const getById = async (req, res, next) => {
   }
 };
 
+const editPost = async (req, res, next) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  try {
+  const authorized = await BlogPost.findByPk(id, {
+    include: [{ model: Category,
+    as: 'categories',
+    attribuites: { 
+      exclude: PostsCategory } }],
+  });
+  if (authorized.userId !== req.dataToken.id) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+  await authorized.set({ title, content });
+  await authorized.save();
+
+  return res.status(200).json(authorized);
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
     create,
     getAll,
     getById,
+    editPost,
 };

@@ -7,6 +7,7 @@ const { validationDisplayName,
 const { verifyToken } = require('./middleware/verifyToken');
 const { validationNameCategory } = require('./middleware/ValidationCategoy'); 
 const {
+    notAutorized,
     validationCategotyId,
     validationTitle,
     validationContent } = require('./middleware/ValidationBlogPost');
@@ -41,3 +42,8 @@ app.post('/post',
   verifyToken, Post.create);
 app.get('/post', verifyToken, Post.getAll);
 app.get('/post/:id', verifyToken, Post.getById);
+app.put('/post/:id', 
+  notAutorized,
+  validationContent,
+  validationTitle,
+  verifyToken, Post.editPost);
