@@ -39,3 +39,4 @@ app.post('/post',
   validationTitle, 
   validationContent,
   verifyToken, Post.create);
+app.get('/post', verifyToken, Post.getAll);
